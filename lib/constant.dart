@@ -17,6 +17,14 @@ const kSliderInactiveColor = Color(0xFF8D8E98);
 const kTitleTextStyle =
     TextStyle(fontSize: 18.0, color: Color(kCardChildActivedColor));
 
+const kResultTileTextStyle =
+    TextStyle(fontSize: 20.0, color: Colors.greenAccent);
+
+const kResultDescriptionTextStyle = TextStyle(
+  fontSize: 18.0,
+  color: Colors.white70,
+);
+
 const kNmuberTextStyle = TextStyle(
   fontSize: 60.0,
   fontWeight: FontWeight.w900,

@@ -18,6 +18,8 @@ class _InputPageState extends State<InputPage> {
   // NOTE : No.6 상태 저장 변수를 통해 직접 BG Color를 변경하자.
   Gender selectedGender;
   int mHeight = 180;
+  int mWeight = 60;
+  int mAge = 20;
 
   @override
   Widget build(BuildContext context) {
@@ -122,40 +124,138 @@ class _InputPageState extends State<InputPage> {
                 Expanded(
                   child: ReuseableCard(
                     colour: kActiveCardColor,
+                    cardChild: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'WEIGHT',
+                          style: kTitleTextStyle,
+                        ),
+                        Text(
+                          mWeight.toString(),
+                          style: kNmuberTextStyle,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            RoundIconButton(
+                              icon: FontAwesomeIcons.minus,
+                              fnPress: () {
+                                setState(() {
+                                  mWeight--;
+                                });
+                              },
+                            ),
+                            SizedBox(
+                              width: 10.0,
+                            ),
+                            RoundIconButton(
+                              icon: FontAwesomeIcons.plus,
+                              fnPress: () {
+                                setState(() {
+                                  mWeight++;
+                                });
+                              },
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
                   ),
                 ),
                 Expanded(
                   child: ReuseableCard(
                     colour: kActiveCardColor,
+                    cardChild: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'AGE',
+                          style: kTitleTextStyle,
+                        ),
+                        Text(
+                          mAge.toString(),
+                          style: kNmuberTextStyle,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            RoundIconButton(
+                              icon: FontAwesomeIcons.minus,
+                              fnPress: () {
+                                setState(() {
+                                  mAge--;
+                                });
+                              },
+                            ),
+                            SizedBox(
+                              width: 10.0,
+                            ),
+                            RoundIconButton(
+                              icon: FontAwesomeIcons.plus,
+                              fnPress: () {
+                                setState(() {
+                                  mAge++;
+                                });
+                              },
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ],
             ),
           ),
-          Container(
-            color: Color(kBottomContainerColor),
-            margin: EdgeInsets.only(top: 10.0),
-            width: double.infinity,
-            height: kBottomContainerHeight,
+          GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(context, '/result');
+            },
+            child: Container(
+              alignment: Alignment.center,
+              child: Text(
+                'CALCULATOR',
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 40.0,
+                    fontWeight: FontWeight.bold),
+              ),
+              color: Color(kBottomContainerColor),
+              margin: EdgeInsets.only(top: 10.0),
+              padding: EdgeInsets.all(20.0),
+              width: double.infinity,
+              height: kBottomContainerHeight,
+            ),
           )
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   child: Icon(Icons.add),
+      // ),
     );
   }
 }
 
-/*
+// NOTE :  No.12 - 커스텀 버튼 만들기 (RawMaterialButton 사용)
+class RoundIconButton extends StatelessWidget {
+  RoundIconButton({@required this.icon, this.fnPress});
 
-Container(
-        decoration: BoxDecoration(
-          color: Color(0xFF1D1E33),
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-        margin: EdgeInsets.all(15.0),
+  final IconData icon;
+  final Function fnPress;
+
+  @override
+  Widget build(BuildContext context) {
+    return RawMaterialButton(
+      child: Icon(icon),
+      onPressed: fnPress,
+      elevation: 0.0,
+      constraints: BoxConstraints.tightFor(
+        width: 56.0,
+        height: 56.0,
       ),
-
-
- */
+      shape: CircleBorder(),
+      fillColor: Color(0xFF4C4F5E),
+    );
+  }
+}
