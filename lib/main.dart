@@ -1,34 +1,28 @@
 import 'package:flutter/material.dart';
+import 'input_page.dart';
 
 void main() => runApp(BMICalculator());
 
+// NOTE : 1. Main dart에서는 테마만 정하자
 class BMICalculator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      // theme: ThemeData.dark(),  //NOTE : -TIP- 기본 LIGHT 테마를 DART 테마로 변경
+      /* NOTE : -TIP- 사용자 테마 만들기
+      theme: ThemeData(
+        primaryColor: Color(0xFF0A0E21),
+        scaffoldBackgroundColor: Color(0xFF0A0E21),
+        textTheme: TextTheme(bodyText1: TextStyle(color: Colors.white)),
+        accentColor: Colors.purple,
+      ),
+      */
+      // NOTE -TIP- Theme copyWith를 이용해서 기존 테마를 커스터마이징 처리
+      theme: ThemeData.dark().copyWith(
+        primaryColor: Color(0xFF0A0E21),
+        scaffoldBackgroundColor: Color(0xFF0A0E21),
+      ),
       home: InputPage(),
-    );
-  }
-}
-
-class InputPage extends StatefulWidget {
-  @override
-  _InputPageState createState() => _InputPageState();
-}
-
-class _InputPageState extends State<InputPage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('BMI CALCULATOR'),
-      ),
-      body: Center(
-        child: Text('Body Text'),
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-      ),
     );
   }
 }
