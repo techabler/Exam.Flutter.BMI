@@ -1,6 +1,6 @@
 // NOTE : Card box안에 icon 사용자 위젯
 import 'package:flutter/material.dart';
-import 'constant.dart';
+import '../constant.dart';
 
 class IconContent extends StatelessWidget {
   IconContent({this.childIcon, this.childTitle});

@@ -1,8 +1,18 @@
 import 'package:bmi_calculator/constant.dart';
 import 'package:flutter/material.dart';
-import 'reuseable_card.dart';
+import '../components/bottom_button.dart';
+import '../components/reuseable_card.dart';
 
 class ResultPage extends StatelessWidget {
+  ResultPage(
+      {@required this.bmiResult,
+      @required this.resultText,
+      @required this.interpretation});
+
+  final String bmiResult;
+  final String resultText;
+  final String interpretation;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,7 +25,13 @@ class ResultPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Expanded(
-            flex: 9,
+              child: Text(
+            'Your Result',
+            style: kResultTopTitleTextStyle,
+            textAlign: TextAlign.center,
+          )),
+          Expanded(
+            flex: 8,
             child: ReuseableCard(
               colour: kActiveCardColor,
               cardChild: Column(
@@ -23,15 +39,16 @@ class ResultPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    'NORMAL',
+                    resultText,
                     style: kResultTileTextStyle,
                   ),
                   Text(
-                    '19.2',
+                    bmiResult,
                     style: kNmuberTextStyle,
                   ),
                   Text(
-                    'You have a normal body weight.\n Good job!',
+                    interpretation,
+                    textAlign: TextAlign.center,
                     style: kResultDescriptionTextStyle,
                   )
                 ],
@@ -40,19 +57,11 @@ class ResultPage extends StatelessWidget {
           ),
           Expanded(
             flex: 1,
-            child: Container(
-              alignment: Alignment.center,
-              child: Text(
-                'Re-Calculator',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 40.0,
-                    fontWeight: FontWeight.bold),
-              ),
-              color: Color(kBottomContainerColor),
-              margin: EdgeInsets.only(top: 10.0),
-              width: double.infinity,
-              height: kBottomContainerHeight,
+            child: BottomButton(
+              buttonTitle: 'Re-Calculator',
+              fnTap: () {
+                Navigator.pop(context);
+              },
             ),
           ),
         ],

@@ -1,10 +1,14 @@
 import 'dart:ffi';
 
+import 'package:bmi_calculator/calculator.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'reuseable_card.dart';
-import 'icon_content.dart';
-import 'constant.dart';
+import 'package:bmi_calculator/components/reuseable_card.dart';
+import 'package:bmi_calculator/components/bottom_button.dart';
+import 'package:bmi_calculator/components/round_icon_button.dart';
+import 'package:bmi_calculator/constant.dart';
+import 'package:bmi_calculator/components/icon_content.dart';
+import 'package:bmi_calculator/screen/result_page.dart';
 
 enum Gender { mail, femail }
 
@@ -208,54 +212,36 @@ class _InputPageState extends State<InputPage> {
               ],
             ),
           ),
-          GestureDetector(
-            onTap: () {
-              Navigator.pushNamed(context, '/result');
+          BottomButton(
+            buttonTitle: 'CALCULATOR',
+            fnTap: () {
+              CalculatorBrain calc =
+                  CalculatorBrain(weight: mWeight, height: mHeight);
+
+              // NOTE : No.11 - Page Route with arguments
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ResultPage(
+                      bmiResult: calc.calculateBMI().toString(),
+                      resultText: calc.getResult().toUpperCase(),
+                      interpretation: calc.getInterpretation()),
+                ),
+              );
+
+              // NOTE : No.11 - pushNamed방식에서 args를 전달하기 위해서는 Req/Response 모두 Map<>으로 전달/받아야 함.
+              // Navigator.pushNamed(context, '/result', arguments: {
+              //   "bmiResult": calc.calculateBMI().toString(),
+              //   "resultText": calc.getResult(),
+              //   "interpretation": calc.getInterpretation(),
+              // });
             },
-            child: Container(
-              alignment: Alignment.center,
-              child: Text(
-                'CALCULATOR',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 40.0,
-                    fontWeight: FontWeight.bold),
-              ),
-              color: Color(kBottomContainerColor),
-              margin: EdgeInsets.only(top: 10.0),
-              padding: EdgeInsets.all(20.0),
-              width: double.infinity,
-              height: kBottomContainerHeight,
-            ),
           )
         ],
       ),
       // floatingActionButton: FloatingActionButton(
       //   child: Icon(Icons.add),
       // ),
-    );
-  }
-}
-
-// NOTE :  No.12 - 커스텀 버튼 만들기 (RawMaterialButton 사용)
-class RoundIconButton extends StatelessWidget {
-  RoundIconButton({@required this.icon, this.fnPress});
-
-  final IconData icon;
-  final Function fnPress;
-
-  @override
-  Widget build(BuildContext context) {
-    return RawMaterialButton(
-      child: Icon(icon),
-      onPressed: fnPress,
-      elevation: 0.0,
-      constraints: BoxConstraints.tightFor(
-        width: 56.0,
-        height: 56.0,
-      ),
-      shape: CircleBorder(),
-      fillColor: Color(0xFF4C4F5E),
     );
   }
 }
